@@ -1,3 +1,4 @@
+'''This module implements navigation on json file'''
 import json
 
 def read_data(path: str) -> list:
@@ -5,9 +6,11 @@ def read_data(path: str) -> list:
     try:
         with open(path, mode='r', encoding='utf-8') as json_file:
             data = json.load(json_file)
+
     except FileNotFoundError:
         print(f"Sorry, file from '{path}' isn't found")
-        return
+        return None
+
     return data
 
 
@@ -27,18 +30,20 @@ def list_analysis(index: str, data: list):
     if index == 'all':
         for element in data:
             print(element)
-        return
+        return None
+
     try:
         index = int(index)
         data = data[index]
+
     except (IndexError, ValueError):
         print(f'Sorry, there isn\'t element with index {index}')
-        return
-    
+        return None
+
     return data
 
 
-def dict_analysis(key: str, data: list):
+def dict_analysis(user_key: str, data: list):
     '''
     Return element of dict with entered key if it exist
     >>> print(dict_analysis('a', {'a': [2, 3], 'b': 8}))
@@ -49,16 +54,17 @@ def dict_analysis(key: str, data: list):
     >>> dict_analysis('name', {'a': [2, 3], 'b': 8})
     Sorry, there isn't element with key 'name'
     '''
-    if key == 'all':
+    if user_key == 'all':
         for key in data:
             print(f'{key}: {data[key]}')
-        return
+        return None
+
     try:
-        data = data[key]
+        data = data[user_key]
     except KeyError:
-        print(f"Sorry, there isn't element with key '{key}'")
-        return
-    
+        print(f"Sorry, there isn't element with key '{user_key}'")
+        return None
+
     return data
 
 
@@ -66,6 +72,7 @@ def main():
     '''Main function'''
     path = input('Enter the path to json file: ')
     data = read_data(path)
+
     while data:
         if isinstance(data, list):
             print(f'This object is a list with {len(data)} elements')
@@ -74,7 +81,7 @@ def main():
             data = list_analysis(index, data)
 
         elif isinstance(data, dict):
-            print(f'This object is a dict with these keys:')
+            print('This object is a dict with these keys:')
             for key in data:
                 print(key)
             index = input('Enter key you want to see or "all" to see whole dict: ')
