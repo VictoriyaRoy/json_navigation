@@ -75,16 +75,16 @@ def main():
 
     while data:
         if isinstance(data, list):
-            print(f'This object is a list with {len(data)} elements')
-            index = input('Enter index of element you want to see or "all" to see whole list: ')
+            print(f'This item is an array with {len(data)} elements')
+            index = input('Enter index of element you want to see or "all" to see whole array: ')
             print()
             data = list_analysis(index, data)
 
         elif isinstance(data, dict):
-            print('This object is a dict with these keys:')
+            print('This item is an object with these keys:')
             for key in data:
                 print(key)
-            index = input('Enter key you want to see or "all" to see whole dict: ')
+            index = input('Enter key you want to see or "all" to see whole object: ')
             print()
             data = dict_analysis(index, data)
 
